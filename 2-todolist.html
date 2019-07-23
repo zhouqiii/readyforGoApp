@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>todolist-script</title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+        <input type="text" v-model="inputValue"/>
+        <button @click="submit">提交</button>
+        <div>
+            <ul>
+              <todo-item v-for="(item,index) in list" :index="index" :content="item" @delete="deleteDate"></todo-item>
+            </ul>
+        </div>
+        </div>
+        <script>
+            var TodoItem = {
+              props: ['content','index'],
+              template:"<li @click='submitDel'>{{content}}</li>",
+              methods: {
+                submitDel: function() {
+                    this.$emit('delete',this.index);
+                }
+              }
+            }
+            
+            var app=new Vue({
+                el: '#app',
+                components: {
+                    TodoItem: TodoItem
+                },
+                data:{
+                    list: [],
+                    inputValue: ''
+                },
+                methods: {
+                    submit: function() {
+                        this.list.push(this.inputValue);
+                        this.inputValue='';
+                    },
+                    deleteDate: function(index) {
+                        this.list.splice(index,1)
+                    }
+                }
+
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!--1这样v-model就绑两个值啦-->
+            <input v-model="this.list+'/'+this.inputValue"/>
+            <!--2这样用computed计算属性使v-model也能绑两个值啦，与methods相比，有缓存，性能高-->
+            <input v-model="fullName"/>
+            <!--3这样v-model用methods方法也绑两个值啦ps:用watch监听list和inputValue的变化，在watch定义两个函数监听两个变量的变化，每一次变化return也可以实现-->
+            <input v-model="full()"/>
+        </div>
+        <script>
+            var vm=new Vue({
+                el: '#app',
+                data:{
+                    list: 'Dell',
+                    inputValue: 'Li'
+                },
+                methods: {
+                    full: function() {
+                        return this.list+'/'+this.inputValue;
+                    }
+                },
+                //计算属性2有缓存的意思是若不改变list和inputValue的值，就会利用缓存，不用一直加载
+                computed: {
+                    fullName:{
+                    get: function() {
+                        return this.list+'/'+this.inputValue;
+                    },
+                    set: function(value) {//当fullName第一次加载后，如果list和inputValue有改变才会调用set
+                        var arr=value.split("");
+                        this.list=arr[0];
+                        this.inputValue=arr[1]
+                    }
+                    } 
+                }
+
+            })
+        </script>
+    </body>
+</html>

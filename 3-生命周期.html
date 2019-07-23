@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>生命周期</title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          
+        </div>
+        <script>
+            //生命周期函数就是vue实例在某一时间点自动执行的函数
+            var vm = new Vue({
+                el: '#app',
+                template: '<div>{{text}}</div>',//3-如果有template模板，则vue渲染template元素，如果没有template，将el的元素识别为template渲染
+                data: {
+                    text: 'hello world',
+                },
+                beforeCreated: function() {//1-vue实例自动创建并加载
+                    console.log('beforeCreated')
+                },
+                created: function() {//2-vue实例自动创建并加载
+                    console.log('created')
+                },
+                beforeMounted: function() {//4-在页面渲染之前，即渲染挂载到实例上之前创建的关系
+                    console.log('beforeMounted')
+                },
+                mounted: function() {//5-渲染页面，即渲染已经挂载到实例上
+                    console.log(this.$el),
+                    console.log('mounted')
+                },
+                beforeDestroy: function() {//6-在实例被销毁之前
+                    console.log('beforeDestroy')
+                },
+                destroyed: function() {//7-实例被销毁后的生命周期函数
+                    console.log('destroyed')
+                },
+                beforeUpdate: function() {//8-数据改变，没有重新渲染之前创建
+                    console.log('beforeUpdate')
+                },
+                updated: function() {//9-数据改变，重新渲染之后创建,综上是八个生命周期函数
+                    console.log('updated')
+                }
+            })
+        </script>
+    </body>
+</html>
