@@ -1,2 +1,2 @@
 # readyforGoApp
-the basic learning to finish GoApp 
+the basic VUE learning to finish GoApp 
