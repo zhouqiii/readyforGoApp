@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>数组修改</title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          <div v-for="(item,index) in text" :key="index">{{item}}</div>
+        </div>
+        <script>
+           
+            var vm = new Vue({
+                el: '#app',
+               
+                data: {
+                    text: [1,2,3,4]
+                    //在数组得列表渲染遍历数组时，改变数组值：
+                    //1.把text数组对象改变text:[1,2,3,4,5]
+                    //2.this.text.splice(3,1,5)变成text[1,2,3,5]
+                    //3.this.text.set(this.text,3,5)变成text[1,2,3,5]用set方法，或者vm.$set
+                }
+            })
+        </script>
+    </body>
+</html>

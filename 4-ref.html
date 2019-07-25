@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>ref
+        </title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          <plus is='count' ref="one" @change="countSub"></plus><!--ref是引用，this.$refs.one是挂载到实例下所有引用的名为one的ref-->
+          <plus is='count' ref="two" @change="countSub"></plus>
+          {{sub}}
+        </div>
+        <script>
+            Vue.component('count',{
+                template:'<div @click="add">{{counter}}</div>',
+                data: function() {
+                    return{
+                        counter: 0
+                    }
+                },
+                methods: {
+                    add: function() {
+                        this.counter++;
+                        this.$emit('change')//this.$emit是子组件向父组件触发一个叫做change的事件
+                    }
+                }
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    sub: 0
+                },
+               methods: {
+                   countSub: function() {
+                     this.sub=this.$refs.one.counter+this.$refs.two.counter;
+                   }
+               }
+            })
+        </script>
+    </body>
+</html>

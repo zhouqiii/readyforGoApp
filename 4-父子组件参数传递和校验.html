@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>父子组件传值
+        </title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          <counter :number="1" @change="add"></counter><!--父组件通过属性向子组件传值-->
+          <counter :number="2" @change="add"></counter>
+          {{sub}}
+        </div>
+        <script>
+            var counter = {
+                props: {//且props特性不显示在dom标签
+                    number: {
+                        // type: String//类型限制
+                        // required: false,//number要求必传吗，即父组件必须有number吗
+                        // default: 'replaced value',//即如果不是必传的，没传number的话设置一个默认值
+                        // validator: function(value) {//传值的校验
+                        //  return(value.length<6)
+                        // }
+                    }
+                },
+                template: '<div @click="addNumber">{{numberSon}}</div>',
+                data: function() {
+                    return{
+                        numberSon: this.number
+                    }
+                },
+                methods: {
+                    addNumber: function() {
+                        this.numberSon=this.numberSon+2;
+                        this.$emit('change',2)
+                    }
+                }
+            }
+            var vm = new Vue({
+                el: '#app',
+                components: {
+                    counter: counter
+                },
+                data: {
+                    sub: 3
+                },
+                methods: {
+                    add: function(step) {
+                        this.sub=this.sub+step;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
