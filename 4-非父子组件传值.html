@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>非父子组件间传递参数（Bus/总线/发布订阅模式/观察者模式）
+        </title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          <child date="Jack"></child>
+          <child date="Johns"></child>
+        </div>
+        <script>
+            Vue.prototype.bus = new Vue()
+
+            Vue.component('child',{
+            template:'<div @click="handleClick">{{selfdate}}</div>',
+            props: {
+                date: {
+                    type: String
+                }
+            },
+            data: function() {
+                return{
+                    selfdate: this.date
+                }
+            },
+            methods: {
+                handleClick: function() {
+                    this.bus.$emit('change',this.selfdate)
+                }
+            },
+            mounted: function() {
+                var this_=this;
+                this.bus.$on('change',function(msg) {
+                    this_.selfdate=msg;
+                })
+            }
+            })
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    sub: 0
+                },
+               methods: {
+                   countSub: function() {
+                     this.sub=this.$refs.one.counter+this.$refs.two.counter;
+                   }
+               }
+            })
+        </script>
+    </body>
+</html>

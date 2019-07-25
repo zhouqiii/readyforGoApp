@@ -8,8 +8,8 @@
     </head>
     <body>
         <div id="app">
-          <plus is='count' ref="one" @change="countSub"></plus><!--ref是引用，this.$refs.one是挂载到实例下所有引用的名为one的ref-->
-          <plus is='count' ref="two" @change="countSub"></plus>
+          <plus is='count' ref="one" @change="countSub" @click.native="handleCLick"></plus><!--ref是引用，this.$refs.one是挂载到实例下所有引用的名为one的ref-->
+          <plus is='count' ref="two" @change="countSub" @click.native="handleCLick"></plus>
           {{sub}}
         </div>
         <script>
@@ -35,6 +35,9 @@
                methods: {
                    countSub: function() {
                      this.sub=this.$refs.one.counter+this.$refs.two.counter;
+                   },
+                   handleCLick: function() {//给子组件绑定自定义事件加.native
+                       alert("自定义事件")
                    }
                }
             })

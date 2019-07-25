@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>插槽slot
+        </title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+          <child center="content">
+              <h2 slot="header">header</h2><!--具名插槽-->
+              <h2 slot="footer">footer</h2>
+          </child>
+          <areachild>
+            <template slot-scope="prop">
+                    <li>{{prop.value}}</li>
+            </template>
+          </areachild>
+        </div>
+        <script>
+            Vue.component('child',{
+            template:`<div>
+                      <slot name="header"></slot>
+                      <p>{{center}}</p>
+                      <slot name="footer"></slot>
+                    </div>`,
+            props: {
+                center: {
+                    type: String
+                }
+            },
+            })
+            
+            Vue.component('areachild',{
+            template:`<div>
+                        <ul>
+                        <slot v-for="item of list" :value=item></slot>
+                        </ul>
+                      </div>`,//作用域插槽
+            data: function() {
+                return{
+                      list: [1,2,3,4]
+                }
+            }
+            })
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    sub: 0
+                },
+               methods: {
+                   countSub: function() {
+                     this.sub=this.$refs.one.counter+this.$refs.two.counter;
+                   }
+               }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>插槽slot
+        </title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <component :is="type"></component><!--动态组件-->
+          <!--和动态组件的效果相同 <child-one v-if="type==='child-one'" v-once>
+          </child-one>
+          <child-two  v-if="type==='child-two'" v-once> v-once的作用是在初次加载时缓存，销毁后重新渲染只要调用缓存，不用重新加载dom
+          </child-two> -->
+          <button @click="handleBtnClick">Change</button>
+        </div>
+        <script>
+            Vue.component('child-one',{
+            template:`<div>
+                      one
+                     </div>`,
+            })
+            
+            Vue.component('child-two',{
+            template:`<div>
+                        two
+                      </div>`
+            })
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    type: 'child-one'//设置初始显示组件
+                },
+               methods: {
+                handleBtnClick: function() {
+                     this.type=(this.type==='child-one'?'child-two':'child-one')
+                   }
+               }
+            })
+        </script>
+    </body>
+</html>
