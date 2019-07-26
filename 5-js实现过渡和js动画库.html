@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Velocity</title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+        <script src="https://cdn.bootcss.com/velocity/2.0.4/velocity.js"></script> <!--Velocity是js实现动画的库 -->
+        <style>
+        </style>
+    </head>
+    <body>
+        <div id="app">
+        <transition name="fade" 
+          @before-enter="handleBeforeEnter"
+          @enter="handleEnter"
+          @after-enter="handleAfterEnter"
+         ><!--同样的还有transition隐藏时创建的before-leave，leave，after-leave钩子函数 -->
+         <div v-if="show">hello world</div>
+        </transition>
+        <button @click="handleBtnClick">Change</button>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    show: true
+                },
+               methods: {
+                handleBtnClick: function() {
+                  this.show = !this.show;
+                },
+                handleBeforeEnter: function(el) {//el是transition内部包裹的dom，el是js钩子函数brfore-enter创建时就携带的参数
+                   el.style.color='red';
+                   el.style.opacity=0;
+                },
+                handleEnter: function(el,done) {//el是transition内部包裹的dom，el和done是js钩子函数enter创建时就携带的参数和属性
+                   setTimeout(() => {
+                       el.style.color='green';
+                       done();//done()声明enter钩子函数作用结束
+                   },2000)
+                   Velocity(el,{opacity: 1},{//使用Velocity的方法
+                       duration: 2000,
+                       complete: done
+                   })
+                   
+                },
+                handleAfterEnter: function(el) {
+                    setTimeout(() => {
+                       el.style.color='orange';
+                   },2000)
+                }
+               }
+            })
+        </script>
+    </body>
+</html>

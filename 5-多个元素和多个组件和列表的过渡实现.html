@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>多过渡</title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+        <style>
+        .fade-enter,.fade-leave-to {
+                opacity: 0;
+            }
+        .fade-enter-active,.fade-leave-active {
+                transition: opacity 1s;
+            }
+        .group-enter,.group-leave-to {
+                opacity: 0;
+            }
+        .group-enter-active,.group-leave-active {
+                transition: opacity 1s;
+            }
+        .fadecom-enter,.fadecom-leave-to {
+                opacity: 0;
+            }
+        .fadecom-enter-active,.fadecom-leave-active {
+                transition: opacity 1s;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+        <transition mode="out-in" name="fade"><!-- transition的mode属性，设置动画是先进后出还是先出后进 -->
+         <div v-if="show" key="hello">hello world</div><!-- 多个元素实现动画 -->
+         <div v-else key="bye">bye world</div>
+        </transition>
+        <button @click="handleBtnClick">Change</button>
+        <transition mode="out-in" name="fadecom"><!-- transition的mode属性，设置动画是先进后出还是先出后进 -->
+            <component :is="type"></component> <!--多个组件实现动画 -->
+            <!--<child-one v-if="show"></child-one>
+            <child-two v-else></child-two> 与component动态组件效果相同-->
+        </transition>
+        <button @click="handleBtnClick1">Change</button>
+        <transition-group name="group">
+            <div v-for="(item,index) in list" :key="index">{{item.value}}</div>
+        </transition-group>
+        <button @click="handleAdd">Add</button>
+        </div>
+        <script>
+            Vue.component('child-one',{
+                template: '<div>one</div>'
+            })
+            Vue.component('child-two',{
+                template: '<div>two</div>'
+            })
+            var count = 0;
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    show: true,
+                    type: 'child-one',
+                    list: []
+                },
+               methods: {
+                handleBtnClick: function() {
+                    this.show=!this.show;
+                },
+                handleBtnClick1: function() {
+                    this.type=(this.type==='child-one'?'child-two':'child-one')
+                },
+                handleAdd: function() {
+                    this.list.push({
+                        id: count++,
+                        value: 'hello'
+                    })
+                }
+               }
+            })
+        </script>
+    </body>
+</html>

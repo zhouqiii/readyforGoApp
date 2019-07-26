@@ -21,7 +21,7 @@
     </head>
     <body>
         <div id="app">
-        <transition name="fade" enter-class="enter" leave-to-class="enter" enter-active-class="active" leave-active-class="active">
+        <transition name="fade" enter-class="enter" leave-to-class="enter" enter-active-class="active" leave-active-class="active"><!-- transition是es6标准 -->
          <div v-if="show">hello world</div>
         </transition>
          <button @click="handleBtnClick">Change</button>

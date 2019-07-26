@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>aminate</title>
         <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
-        <link href="https://cdn.bootcss.com/animate.css/3.7.1/animate.css" rel="stylesheet">
+       <link href="https://cdn.bootcss.com/animate.css/3.7.1/animate.css" rel="stylesheet">  <!--animate是css3库-->
         <style>
             .fade-enter,.fade-leave-to{
                 opacity: 0;
@@ -18,8 +18,7 @@
         <div id="app">
         <transition name="fade" 
                 appear
-                type="transition"
-                duration="10s"
+                :duration="{enter: 3000, leave: 10000}"
                 enter-active-class="animated swing fade-enter-active" 
                 leave-active-class="animated flash fade-leave-active"
                 apper-active-class="animated swing"
